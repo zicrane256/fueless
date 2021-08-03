@@ -1,0 +1,258 @@
+
+<div class="oj-hybrid-applayout-page">
+    <div class="oj-applayout-fixed-top">
+        <oj-switcher value="[[selectedItemHeader]]">
+            <div slot="main" 
+                 id="main-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="main-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238; width:100%;">
+                        <div class="oj-flex-item">
+                        <oj-module config="[[headerConfig]]"></oj-module>
+                        </div>
+                        <div class="oj-flex-item" align="right">
+                            <a href="#"  data-bind="click: showSearch">
+                                <img class="icon" src="css/images/searchicon.png"/><br/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="edit" 
+                 id="edit-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="edit-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238;height: 60px; width:100%;">
+                        <div class="oj-flex-item">
+                            <a href="#" data-bind="click: function(data){toggleStationDrawer('end','stationlist');}">
+                                <img class="icon" src="css/images/back.png"/>  
+                            </a>
+                        </div>
+                        <div class="oj-flex-item">
+                          <span style="color: white;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: header()"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="search" 
+                 id="search-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="search-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: white;height: 60px; width:100%;">
+                        <div class="oj-flex-item" align="left">
+                            <a href="#"  data-bind="click: showMain">
+                                <img class="icon" src="css/images/arrow-left-black.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="center">
+                            <oj-input-search id="searchfilter"
+                                             style="min-width:16em;"
+                                             value="{{stationFilter}}"
+                                             on-raw-value-changed="[[handleStationValueChanged]]"
+                                             placeholder="Search..."
+                                             aria-label="My search field">
+                            </oj-input-search>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div slot="map" 
+                 id="map-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="map-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238;height: 60px; width:100%;">
+                        <div class="oj-flex-item" align="left">
+                            <a href="#"  data-bind="click: closeMappingView">
+                                <img class="icon" src="css/images/back.png"/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="left">
+                    <span style="color: white;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: station().name+' Mapping'"></span>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </oj-switcher>
+    </div>
+
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <div id="stationcontainer" style="" class="demo-padding demo-container">
+                    <div class="oj-offcanvas-outer-wrapper" style="height: 600px">
+                        <div id="mainContent" class="demo-main-content">
+                            <oj-switcher value="[[selectedItem]]">
+                                <div slot="stationlist" 
+                                     id="stationlist-tab-panel"
+                                     role="tabpanel" 
+                                     aria-labelledby="stationlist-tab">
+                                    <div class="demo-tab-content">
+                                        <div class="oj-flex">
+                                           
+                                            <div class="oj-flex-item" align="right">
+                                                <a href="#"  data-bind="click: function(data){toggleStationDrawer('end','add');}">
+                                                    <img style="width:50px; height:40px;" src="css/images/add.svg"/><br/>
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="oj-flex">
+                                            <div class="oj-flex-item">
+                                                <oj-table id='stationlisttable' aria-label='Station list Table'
+                                                          data='[[datasource]]'
+                                                          scroll-policy='loadMoreOnScroll'
+                                                          scroll-policy-options='{"fetchSize": 7}'
+                                                          style="height: 450px;width: 90%"
+                                                          class="table1 classstrong"
+                                                          row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("stationlist_template", true)]]'>                    
+                                                </oj-table>
+                                                <!-- mobile view -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div slot="map" 
+                                     id="map-tab-panel"
+                                     role="tabpanel" 
+                                     aria-labelledby="map-tab">
+                                    <div class="demo-tab-content">
+                                        <div class="map" id="googleMap"  style="min-width: 300px;min-height: 600px">
+                                            <span class="smallPanel"><button>Map Station</button></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </oj-switcher>
+                        </div>
+                        <div id="endDrawer" class="oj-offcanvas-end oj-panel oj-panel-alt4 oj-offcanvas-overlay-shadow enddrawer-class"
+                             style="width: 100%;" >
+
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <oj-form-layout label-edge="{{labelEdge}}" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                    <oj-input-text id="name" name="name" autocomplete="off"  valid="{{stationNameValid}}" required="[[stationNameRequired]]"  length.max="32" length.min="5" length.count-by="codeUnit"   value="{{station().name}}" style="min-width:16em"  label-hint="Station Name"></oj-input-text>
+                                    <oj-input-text id="latitude" name="latitude" required disabled="true"  value="{{station().latitude}}" style="min-width:16em"  label-hint="P.Latitude"></oj-input-text>
+                                    <oj-input-text id="longtude" name="name" required disabled="true"  value="{{station().longtude}}" style="min-width:16em"  label-hint="P.Longtude"></oj-input-text>
+                                    <a href="#"  data-bind="click: showMappingView">
+                                        <img class="icon" src="css/images/map.png"/>
+                                    </a>
+                                </oj-form-layout>
+                            </div> 
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <div class="oj-flex">
+                                    <div class="oj-flex-item" data-bind="visible: updateButtonVisibility">
+
+                                        <oj-button   chroming="full" style="width: 12em" data-bind="click:showEditDialog">
+                                            <span style="color:yellow;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Save'"></span>
+                                        </oj-button>
+                                    </div>
+                                    <div class="oj-flex-item" data-bind="visible: addButtonVisibility">
+                                        <oj-button   chroming="full" style="width: 12em" data-bind="click:addStation">
+                                            <span style="color:yellow;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Submit'"></span>
+                                        </oj-button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--</div>-->
+                </div>
+
+
+
+                <script type="text/html" id="stationlist_template">
+                    <tr>
+                        <td>
+
+                    <oj-row-expander context="[[$context.rowContext]]"></oj-row-expander>
+                    </td>
+                    <td data-bind=" click: function(data, event){$parent.getSelectedStation($context.row,event)}">
+                        <span data-bind="text: name"></span><br/>
+                        <span class="oj-text-xs oj-text-secondary-color" data-bind="text:updatedon"></span>
+                    </td>
+                    <td>
+                    </td>
+
+                    </tr>
+                    </script>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="oj-applayout-fixed-bottom">
+            <oj-switcher value="[[selectedItemFooter]]">
+                <div slot="main" 
+                     id="main-tab-panel"
+                     role="tabpanel" 
+                     aria-labelledby="main-tab">
+                    <div class="demo-tab-content">
+
+                    </div>
+                </div>
+                <div slot="map" 
+                     id="map-tab-panel"
+                     role="tabpanel" 
+                     aria-labelledby="map-tab">
+                    <div class="demo-tab-content">
+                        <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center" style="background-color: transparent;height: 60px">
+                            <oj-button style="min-width: 50%" data-bind="click:confirmPosition">
+                            <span style="color: white;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Confirm'"></span> 
+                            </oj-button>
+                        </div>
+                    </div>
+                </div>
+            </oj-switcher>
+
+
+        </div>
+
+        <oj-dialog  id="editDialog" style="background-color: transparent">
+            <div slot="body">
+                <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                    <oj-table id='attendancelisttable' aria-label='Edit list Table'
+                              data='[[optionDatasource]]'
+                              style="background-color: #f2eeee"
+                              class='demo-table-container oj-bg-body'
+                              row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("edit_template", true)]]'>                    
+                    </oj-table>
+                </div>
+            </div>
+        </oj-dialog>
+
+
+        <script type="text/html" id="edit_template">
+            <tr>
+                <td data-bind=" click: function(data, event){$parent.crudStation($context.row, event)}">
+                     <oj-bind-if test="[[id===1]]" >
+                    <span style="color: blue;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+            <oj-bind-if test="[[id===2]]" >
+                    <span style="color: blue;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+            <oj-bind-if test="[[id===3]]" >
+                    <span style="color: blue;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+            <oj-bind-if test="[[id===4]]" >
+                    <span style="color: red;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+                </td>
+            </tr>
+        </script>
+
+
+    </div>
+
+
+
+
+
+
+
+
+

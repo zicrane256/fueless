@@ -1,0 +1,215 @@
+/*
+    Document   : override
+    Created on : <date>
+    Author     : <author>
+    Description:
+        This is where any of your application specific styles should be included
+*/
+
+.sendOffScreen {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/*
+    Document   : override
+    Created on : <date>
+    Author     : <author>
+    Description:
+        This is where any of your application specific styles should be included
+*/
+
+/* Hides the content area until we are ready to display after paddings have been adjusted. 
+    oj-complete is a marker class that is applied by the appController 
+    after adjusting the content area. */
+.oj-applayout-content:not(.oj-complete) {
+  visibility: hidden;
+}
+
+.demo-james-icon {
+  width: 100px;
+  height: 100px;
+  display: block;
+  padding-top: 24px;
+  padding-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+/*  background-color: #fbf6f6*/
+}
+
+.demo-profile-name {
+  font-size: 1.714rem;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  padding-bottom: 42px;
+}
+
+.demo-app-name {
+  padding-top: 40px;
+  color: #ffffff;
+  font-size: 13px;
+ font-weight: lighter;
+  
+}
+
+.sendOffScreen {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+ 
+}
+
+
+
+.inputField{
+ 
+    font-weight: bold;  
+  border-radius: 4px;
+  width:100%;   
+  color:#307238;
+
+    
+}
+
+.oj-flex-ittem oj-buttton {
+ width: 100%;
+  background:#EBF000;
+  color: #FFFFFF;border-radius: 4px;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  
+}
+.ojbtn{background: #2D710A; color:#EBF000;  border-radius: 4px; margin:6px;}
+
+#bottomDrawer{
+    background:#4CAF50;
+    color:#EBF000;
+    font-size: 9px;
+    
+}
+.test:after {
+  content: '\2807';
+  font-size: 30px;
+  color:#ffffff;
+  }
+.oj-hybrid-applayout-header{
+    background:#2d710a;color:#ffffff;float:left; width:100%;
+    padding: 24PX;
+    margin-top:-10px;
+    /*background-color:#20681f*/
+    
+}
+.oj-hybrid-applayout-header-registration{
+    background:#2d710a;color:#ffffff;float:left; width:100%;
+    padding: 10PX;
+    margin-top:-10px;
+}
+.about p{
+    font-size: 10px;
+    
+}
+
+.drawerfooter{
+    position:absolute;
+    bottom:10px;
+    padding:16px;
+    
+}
+
+
+
+.oj-hybrid-applayout-page{
+    
+   background-image: url("images/background-01.png"); /* The image used */
+
+  background-position: center; /* Center the image */
+  background-repeat:repeat; /* Do not repeat the image */
+
+}
+.oj-hybrid-applayout-page-bout{
+    
+
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.tables{overflow-y:scroll;
+border: solid thin #333333;}
+
+
+
+
+
+
+  .demo-navlist-container {
+      max-width: 15rem;
+  }
+table{
+      border:none;
+  }
+  
+ .icon{width: 30px}
+ 
+ 
+ .demo-popup {
+      width: 90vw;  
+      height: 60vh; 
+      display: none;
+    } 
+    .demo-popup-body {
+      width: 75vw;  
+      height: 75vh; 
+      display: flex; 
+      flex-direction: column;
+      align-items: stretch;
+    } 
+    .demo-popup-header {
+      align-self: flex-start;
+      margin-bottom: 10px;
+    } 
+    .demo-popup-content {
+      align-self: stretch;
+      overflow: auto;
+      flex-basis: 60vh;
+    } 
+    .demo-popup-footer {
+      align-self: flex-end;
+      margin-top: 10px; 
+    }
+    
+    content-panel {
+  background: pink;
+  display: block;
+  overflow: auto;
+  height: 100%; /* NEW */
+}
+
+.region{
+  box-shadow: 5px 5px 5px 5px rgba(0.1, 0, 0, 0.1);
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    /*border-radius: 8px 8px 8px 8px;*/
+    width: 100%;
+    /*border-style: solid;*/
+    border-width: 0.5px;
+    border-top-width: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    /*border-color:rgba(179, 167, 12, 0.7);*/
+    /*min-height: 50px;*/
+    background-color:#fff;  
+/*    background-color:#eeeaea;  */
+}

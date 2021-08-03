@@ -1,0 +1,248 @@
+
+<div class="oj-hybrid-applayout-page">
+    <div class="oj-applayout-fixed-top">
+
+        <oj-switcher value="[[selectedItemHeader]]">
+            <div slot="main" 
+                 id="main-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="main-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238; width:100%;">
+                        <div class="oj-flex-item">
+                            <oj-module config="[[headerConfig]]"></oj-module>
+                        </div>
+                        <div class="oj-flex-item" align="right">
+                            <a href="#"  data-bind="click: showSearchList">
+                                <img class="icon" src="css/images/searchicon.png"/><br/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="search" 
+                 id="search-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="search-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: white;height: 60px; width:100%;">
+                        <div class="oj-flex-item" align="left">
+                            <a href="#"  data-bind="click: showMain">
+                                <img class="icon" src="css/images/arrow-left-black.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="center">
+                            <oj-input-search id="searchfilter"
+                                             style="min-width:16em;"
+                                             value="{{saleFilter}}"
+                                             on-raw-value-changed="[[handleSaleChanged]]"
+                                             placeholder="Search..."
+                                             aria-label="My search field">
+                            </oj-input-search>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div slot="searchdate" 
+                 id="searchdate-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="searchdate-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238;height: 60px; width:100%;">
+                        <div class="oj-flex-item" align="left">
+                            <a href="#"  data-bind="click: showMain">
+                                <img class="icon" src="css/images/back.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="left">
+                            <span style="color:white;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Select Dates Search '"></span> 
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </oj-switcher>
+    </div>
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <!--<div id="salehistorycontainer" style="" class="demo-padding demo-container">-->
+
+                <oj-switcher value="[[selectedItemMain]]">
+                    <div slot="main" 
+                         id="main-tab-panel"
+                         role="tabpanel" 
+                         aria-labelledby="main-tab">
+                        <div class="demo-tab-content">
+                            
+                            <oj-list-view id="salelistview" aria-label="simple list"
+                                          selection-mode="single"
+                                          data="[[datasource]]">
+                                <template slot="itemTemplate" data-oj-as="item">
+                                    <li>
+                                    <oj-list-item-layout>
+                                        <span class="oj-typography-body-md oj-text-color-primary">
+                                            <oj-bind-text value="[[item.data.vehicle.registrationNumber]]"></oj-bind-text></span>
+                                        <span slot="secondary" class="oj-typography-body-sm oj-text-color-secondary"><oj-bind-text value="[[item.data.description]]"></oj-bind-text></span>
+                                        <div slot="metadata" class="oj-typography-body-md oj-text-color-secondary">
+                                            <oj-bind-text value="[[item.data.amount]]"> </oj-bind-text>
+                                        </div>
+                                    </oj-list-item-layout>
+                                    </li>
+                                </template>
+                                <template slot="noData">
+                                    <div class="oj-flex oj-sm-align-items-center demo-nodata-content">
+                                        <div class="oj-flex oj-sm-align-items-center oj-sm-flex-direction-column demo-nodata-inner">
+                                            <h5>No Sales +</h5>
+                                        </div>
+                                    </div>
+                                </template>
+                            </oj-list-view>
+
+                        </div>
+                    </div>
+                    <div slot="search" 
+                         id="search-tab-panel"
+                         role="tabpanel" 
+                         aria-labelledby="search-tab">
+                        <div class="demo-tab-content">
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center ">
+
+                                <div class="oj-flex-item">
+                                    <oj-input-date-time id="startDate" style="max-width:12em;" value='{{startDate}}'>
+                                    </oj-input-date-time>
+                                </div>
+                                <div class="oj-flex-item">
+                                    <span class="oj-text-xs oj-text-secondary-color" data-bind="text:'..BTN..  '"></span>
+                                </div>
+                                <div class="oj-flex-item">
+                                    <oj-input-date-time id="endDate" style="max-width:12em;" value='{{endDate}}'>
+                                    </oj-input-date-time>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <oj-button   style="width: 30%"   data-bind="click:getSaleHistoryDates">
+                                       <span style="color:blue;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Search '"></span
+                                    </oj-button>
+                            </div>
+                                <br/>
+                            <div class="oj-flex region">
+                                <div class="oj-flex-item">
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:'Vehicles : '"></span>
+                                </div>
+                                <div class="oj-flex-item" align="left">
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:totalVehicle()"></span>
+                                </div>
+                            </div>
+                            <div class="oj-flex region">
+                                <div class="oj-flex-item">
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:'Consumption : '"></span>
+                                </div>
+                                <div class="oj-flex-item">
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:totalQty()+' Ltrs'"></span>
+                                </div>
+                            </div>
+                            <div class="oj-flex region">
+                                <div class="oj-flex-item">
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:'Discount : '"></span>
+                                </div>
+                                <div class="oj-flex-item">
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:discountQty()+' Ltrs'"></span>
+                                </div>
+                            </div>
+                            <div class="oj-flex region">
+                                <div class="oj-flex-item">
+                                <span class="oj-text-xs oj-text-secondary-color"  data-bind="text:'Amount : '"></span>
+                                </div>
+                                <div class="oj-flex-item">
+                                <span class="oj-text-xs oj-text-secondary-color"  data-bind="text:totalAmount()+' Shs'"></span>
+                                    
+                                </div>
+                            </div>
+                            <div class="oj-flex region">
+                                <div class="oj-flex-item">
+                              <span class="oj-text-xs oj-text-secondary-color" data-bind="text:'Discount : '"></span> 
+                                    
+                                </div>
+                                <div class="oj-flex-item">
+                              <span class="oj-text-xs oj-text-secondary-color" data-bind="text:discountAmount()+' Shs'"></span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </oj-switcher>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="oj-applayout-fixed-bottom" style="height:80px;background-color: transparent">
+        <oj-switcher value="[[selectedItemFooter]]">
+            <div slot="main" 
+                 id="main-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="main-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex">
+<!--                        <div class="oj-flex-item" align="left">
+                            <a href="#" data-bind="click: printSaleList">
+                                <img width="30"  src="css/images/excel.png"/>  
+                            </a>
+                        </div>-->
+
+                        <div class="oj-flex-item" align="right">
+                            <a href="#" data-bind="click: showDatesSearch">
+                                <img width="80"  src="css/images/searchgreen.jpg"/>  
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="search" 
+                 id="search-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="search-tab">
+                <div class="demo-tab-content">
+
+                </div>
+            </div>
+        </oj-switcher>
+    </div>
+
+
+    <script type="text/html" id="salehistorylist_template">
+        <tr>
+            <td>
+                <span data-bind="text: vehicle.registrationNumber"></span>
+                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:createdon"></span><br/>
+                <span data-bind="text:amount"></span>
+                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:' Qty  '+ quantity+' Ltrs'"></span>
+                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:' D-qty  '+ discountQty+' Ltrs'"></span><br/>
+                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:station.name"></span>
+                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:' '+unitcost+' Shs'"></span>
+                <span class="oj-text-xs oj-text-secondary-color" data-bind="text:'  D-Amt '+discountAmt+' Shs'"></span>
+            </td>
+        </tr>
+    </script>
+
+    <oj-dialog  id="progressDialogue" dialog-title="Wait ..." style="background-color: transparent">
+        <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+            <oj-progress id="deleteBatchProgressCircle" type="circle" value="-1"></oj-progress>
+        </div>
+    </oj-dialog>
+
+
+</div>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,398 @@
+
+<div class="oj-hybrid-applayout-page">
+    <div class="oj-applayout-fixed-top">
+      <oj-switcher value="[[selectedItemHeader]]">
+            <div slot="main" 
+                 id="main-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="main-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238; width:100%;">
+                        <div class="oj-flex-item">
+                        <oj-module config="[[headerConfig]]"></oj-module>
+                        </div>
+                    
+                        <div class="oj-flex-item" align="right">
+                            <a href="#" data-bind=" click: showUpdatePassword">
+                                <img width="40"  src="css/images/account-key.png"/>  
+                            </a>
+                                                </div>
+                        <div class="oj-flex-item" align="right">
+                            <a href="#"  data-bind="click: showSearch">
+                                <img class="icon" src="css/images/searchicon.png"/><br/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="search" 
+                 id="search-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="search-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: white;height: 60px; width:100%;">
+                        <div class="oj-flex-item" align="left">
+                            <a href="#"  data-bind="click: showMain">
+                                <img class="icon" src="css/images/arrow-left-black.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="center">
+                                            <oj-input-search id="searchfilter"
+                                                             style="min-width:12em;"
+                                                             value="{{userFilter}}"
+                                                             on-raw-value-changed="[[handleUserChanged]]"
+                                                             placeholder="Search..."
+                                                             aria-label="My search field">
+                                            </oj-input-search>
+                                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="edit" 
+                 id="edit-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="edit-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238;height: 60px; width:100%;">
+                        <div class="oj-flex-item">
+                            <a href="#"  data-bind="click: function(data){toggleUserDrawer('end');}">
+                                <img class="icon" src="css/images/back.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="left">
+                             <span style="color: white;font-size: 30px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: header()"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="password" 
+                 id="password-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="password-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238;height: 60px; width:100%;">
+                        <div class="oj-flex-item">
+                            <a href="#"  data-bind="click: function(data){toggleUserDrawer('end');}">
+                                <img class="icon" src="css/images/back.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="left">
+                             <span style="color: white;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Change Password'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="station" 
+                 id="station-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="station-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238;height: 60px; width:100%;">
+                        <div class="oj-flex-item">
+                            <a href="#"  data-bind="click: showMain">
+                                <img class="icon" src="css/images/back.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="left">
+                             <span style="color: white;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Select Station'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div slot="rolelist" 
+                 id="rolelist-tab-panel"
+                 role="tabpanel" 
+                 aria-labelledby="rolelist-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: #307238;height: 60px; width:100%;">
+                        <div class="oj-flex-item">
+                            <a href="#"  data-bind="click: showMain">
+                                <img class="icon" src="css/images/back.png"/><br/>
+                            </a>
+                        </div>
+                        <div class="oj-flex-item" align="left">
+                             <span style="color: white;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Select Staff Role'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </oj-switcher>
+
+    </div>
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <div id="usercontainer" style="" class="demo-padding demo-container">
+                    <div class="oj-offcanvas-outer-wrapper" style="height: 600px">
+                        <div id="mainContent" class="demo-main-content">
+                            <div class="oj-flex">
+                                <div class="oj-flex-item" align="right">
+                                    <a href="#"  data-bind="click: function(data){toggleUserDrawer('end','add');}">
+                                        <img style="width:50px; height:40px;" src="css/images/add.svg"/><br/>
+
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="oj-flex">
+                                <div class="oj-flex-item">
+                                    
+                                    <oj-list-view id="userlistview" aria-label="simple list"
+                                          selected="{{selectedUserItems}}"
+                              selection-mode="single"
+                              style="height: 500px"
+                              on-selected-changed="[[handleSelectedUserChanged]]"
+                                          data="[[datasource]]">
+                                <template slot="itemTemplate" data-oj-as="item">
+                                    <li>
+                                    <oj-list-item-layout>
+                                        <span class="oj-typography-body-md oj-text-color-primary">
+                                            <oj-bind-text value="[[item.data.name]]"></oj-bind-text></span>
+                                        <span slot="secondary" class="oj-typography-body-sm oj-text-color-secondary"><oj-bind-text value="[[item.data.description]]"></oj-bind-text></span>
+                                       <oj-avatar slot="leading" size="xxs" src="[[item.data.image]]"></oj-avatar>
+                                        <div slot="metadata" class="oj-typography-body-md oj-text-color-secondary">
+                                            <oj-bind-text value="[[item.data.station.name]]"> </oj-bind-text>
+                                        </div>
+                                    </oj-list-item-layout>
+                                    </li>
+                                </template>
+                                <template slot="noData">
+                                    <div class="oj-flex oj-sm-align-items-center demo-nodata-content">
+                                        <div class="oj-flex oj-sm-align-items-center oj-sm-flex-direction-column demo-nodata-inner">
+                                            <h5>No Members +</h5>
+                                        </div>
+                                    </div>
+                                </template>
+                            </oj-list-view>
+                                    
+
+                                </div>
+                            </div>
+                            <br/>
+                          
+                        </div>
+                        <div id="endDrawer" class="oj-offcanvas-end oj-panel oj-panel-alt4 oj-offcanvas-overlay-shadow enddrawer-class"
+                             style="background-color: white;width: 100%;" >
+                            
+                            
+                             <oj-switcher value="[[selectedItem]]">
+              <div slot="form" 
+                   id="form-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="form-tab">
+                <div class="demo-tab-content" style="height: 400px;">
+                <!--<div class="oj-flex-item oj-sm-flex-items-initial oj-sm-justify-content-center" align="left">-->
+                              <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center" >
+                                                <oj-form-layout label-edge="{{labelEdge}}"  class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                  <oj-input-text id="username" name="username" required 
+                                                     placeholder="Enter Staff Name"   autocomplete="off"  valid="{{userNameValid}}" required="[[userNameRequired]]"  length.max="32" length.min="5" length.count-by="codeUnit"  value="{{user().name}}" style="min-width:14em"  label-hint="Name"></oj-input-text>
+                                              <oj-input-text id="nin" autocomplete="off"  valid="{{userNinValid}}" required="[[userNinRequired]]" validators="[[textValidators]]" length.max="32" length.min="8" length.count-by="codeUnit"
+                                                        placeholder="Enter NIN"     name="nin" required   value="{{user().nin}}" style="min-width:14em"  label-hint="NIN"></oj-input-text>
+                                              
+                                              <oj-input-text id="userrole" name="userrole" required   value="[[user().userrole?user().userrole.name:'']]" style="min-width:14em" data-bind="click: showRolelist" placeholder="Enter Staff Role"  label-hint="User Role"></oj-input-text>
+                                               <oj-input-text id="station" name="station" required   value="[[user().station?user().station.name:'']]" style="min-width:14em" data-bind="click: openStationlist" placeholder="Enter Station"  label-hint="Station"></oj-input-text>
+                                             
+                                               
+                                               <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                        <div class="oj-flex-item">
+                                                            <oj-button    style="max-width:6em;height: 53px;background-color: #fdf8f8">
+                                    <span style="color:black;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: '+256'"></span>
+                                </oj-button>
+                                                        </div>
+                                                        <div class="oj-flex-item">
+                                                     <oj-input-number  id="contact" name="contact" required  value="{{user().contact}}" style="min-width:10em" on-keypress=[[eatNonNumbers]]   placeholder="Enter Contact" autocomplete="off" required="[[userContactRequired]]" validators="[[contactValidators]]"
+                                                   valid="{{userContactValid}}"  label-hint="CONTACT"></oj-input-number>
+                                                        </div>
+                                                    </div>
+                                                </oj-form-layout>
+                                            </div> 
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                        <div class="oj-flex-item" data-bind="visible: updateButtonVisibility">
+                                            
+                                             <oj-button   chroming="full" style="width: 12em" data-bind="click:showEditDialog">
+                                                <span style="color:yellow;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Save'"></span>
+                                            </oj-button>
+                                        </div>
+                                        <div class="oj-flex-item" data-bind="visible: addButtonVisibility">
+                                            <oj-button   chroming="full" style="width: 12em" data-bind="click:addUser">
+                                               <span style="color:yellow;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'Submit'"></span>
+                                            </oj-button>
+                                        </div>
+                                        <div class="oj-flex-item" data-bind="visible:progressVisibility">
+                                            <oj-progress-circle size='md' value='-1'></oj-progress-circle>
+                                        </div>
+                                </div>
+                        <!--</div>-->
+                </div>
+              </div>
+              <div slot="staffrole" 
+                   id="staffrole-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="staffrole-tab">
+                <div class="demo-tab-content">
+                 
+                   <oj-module 
+                config="[[ModuleElementUtils.createConfig({name: 'rolelist'})]]" 
+                style="height:100%;">
+            </oj-module>
+                </div>
+              </div>
+              <div slot="station" 
+                   id="station-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="station-tab">
+                <div class="demo-tab-content">
+                   <oj-module 
+                config="[[ModuleElementUtils.createConfig({name: 'stationlist'})]]" 
+                style="height:100%;">
+            </oj-module>
+                </div>
+              </div>
+              <div slot="password" 
+                   id="password-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="password-tab">
+                <div class="demo-tab-content">
+
+                    <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                <oj-form-layout label-edge="{{labelEdge}}" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                     <oj-input-password id="passwordreg"  required label-hint="Password" placeholder="Password..." style="min-width:16em"  label-hint="Password"
+                                                       value="{{password}}" ></oj-input-password>
+                                               <oj-input-password id="confirmpasswordreg"  required label-hint="Confirm Password" placeholder="Confirm Password..." style="min-width:16em"
+                                                       value="{{confirmPassword}}"  ></oj-input-password>
+                                                    <oj-button   chroming="full" style="min-width:18em" data-bind="click:updatePassword">
+                                                Save
+                                            </oj-button>
+                                                </oj-form-layout>
+                                            
+                                            </div>
+                </div>
+              </div>
+            </oj-switcher>
+                            
+                            
+                        </div>
+                    </div>
+                    <!--</div>-->
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <oj-popup id="stationPopup" style="display:none;min-width: 60%;min-height: 500px" class="demo-popup"
+              tail="none" position.my.horizontal="center" position.my.vertical="bottom"
+              position.at.horizontal="center" position.at.vertical="bottom"
+              position.of="window" position.offset.y="-10"
+              modality="modal" auto-dismiss="none" >
+            <div class="oj-flex tabHeader">
+                <div class="oj-flex-item" align="right">
+                    <h3><span  data-bind="text:'Select Station'"></span></h3>
+                </div>
+                <div class="oj-flex-item" align="right">
+                    <a href="#" data-bind="click: closeStationPopUp">
+                        <img width="30" src="css/images/cancel.svg"/>  
+                    </a> 
+                </div>
+            </div>
+            <oj-module 
+                config="[[ModuleElementUtils.createConfig({name: 'stationlist'})]]" 
+                style="height:100%;">
+            </oj-module>
+        </oj-popup>
+
+        <oj-popup id="rolePopup" style="display:none;min-width: 60%;min-height: 500px" class="demo-popup"
+              tail="none" position.my.horizontal="center" position.my.vertical="bottom"
+              position.at.horizontal="center" position.at.vertical="bottom"
+              position.of="window" position.offset.y="-10"
+              modality="modal" auto-dismiss="none">
+            <div class="oj-flex tabHeader">
+                <div class="oj-flex-item" align="right">
+                    <h3><span  data-bind="text:'Select User Role'"></span></h3>
+                </div>
+                <div class="oj-flex-item" align="right">
+                    <a href="#" >
+                        <img width="30" src="css/images/cancel.svg"/>  
+                    </a> 
+                </div>
+            </div>
+            <oj-module 
+                config="[[ModuleElementUtils.createConfig({name: 'rolelist'})]]" 
+                style="height:100%;">
+            </oj-module>
+        </oj-popup>
+    
+    <oj-dialog  id="progressDialogue" dialog-title="Wait ..." style="background-color: transparent">
+                        <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                            <oj-progress id="deleteBatchProgressCircle" type="circle" value="-1"></oj-progress>
+                        </div>
+                    </oj-dialog>
+    
+    
+                    
+                    <oj-dialog id="logoutdialogreg" dialog-title="Password">
+              <div slot="body">
+                <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                <oj-form-layout label-edge="{{labelEdge}}" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                     <oj-input-password id="passwordreg"  required label-hint="Password" placeholder="Password..." style="min-width:16em"  label-hint="Password"
+                                                       value="{{password}}" ></oj-input-password>
+                                               <oj-input-password id="confirmpasswordreg"  required label-hint="Confirm Password" placeholder="Confirm Password..." style="min-width:16em"
+                                                       value="{{confirmPassword}}"  ></oj-input-password>
+                                                    <oj-button   chroming="full" style="min-width:16em" data-bind="click:updatePassword">
+                                                Save
+                                            </oj-button>
+                                                </oj-form-layout>
+                                                 <a href="#">
+                                    <img width="60" data-bind=" click: logout" src="css/images/logout.png"/>  
+                                </a>
+                                            </div>
+              </div>
+            </oj-dialog>
+                    
+                    <oj-dialog  id="editDialog" style="background-color: transparent">
+            <div slot="body">
+                <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                    <oj-table id='attendancelisttable' aria-label='Edit list Table'
+                              data='[[optionDatasource]]'
+                              style="background-color: #f2eeee"
+                              class='demo-table-container oj-bg-body'
+                              row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("edit_template", true)]]'>                    
+                    </oj-table>
+                </div>
+            </div>
+        </oj-dialog>
+
+
+        <script type="text/html" id="edit_template">
+                                        <tr>
+                                            <td data-bind=" click: function(data, event){$parent.crudUser($context.row, event)}">
+                                                <oj-bind-if test="[[id===1]]" >
+                    <span style="color: blue;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+            <oj-bind-if test="[[id===2]]" >
+                    <span style="color: blue;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+            <oj-bind-if test="[[id===3]]" >
+                    <span style="color: blue;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+            <oj-bind-if test="[[id===4]]" >
+                    <span style="color: blue;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+            <oj-bind-if test="[[id===5]]" >
+                    <span style="color: red;font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: option"></span>
+                    </oj-bind-if>
+                                            </td>
+                                        </tr>
+        </script>
+
+
+    </div>
+
+
+
+
+
+
+
+
+

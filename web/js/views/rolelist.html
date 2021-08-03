@@ -1,0 +1,20 @@
+<div id="rolelist">
+    
+    <oj-table id='table' aria-label='Role List Table'
+              data='[[datasource]]' 
+              style="width: 100%"
+              row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("role_large_row_template", true)]]'>
+    </oj-table>
+     
+   
+    <div id="script">
+        <script type="text/html" id="role_large_row_template">
+            <tr>
+                <td data-bind="click:function(data, event){$parent.getSelectedRole($context.row); }">
+                <span data-bind="text: name"></span>
+            </td>
+          
+            </tr>
+            </script>
+        </div>  
+    </div>

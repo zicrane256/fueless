@@ -1,0 +1,174 @@
+
+<div class="oj-hybrid-applayout-page">
+    <div class="oj-applayout-fixed-top">
+        <!--
+         ** Oracle JET V9.1.0 hybrid mobile application header pattern.
+         ** Please see the Oracle JET Cookbook App Shell: Hybrid Mobile demos for
+         ** more information on how to use this pattern.
+        -->
+        <header role="banner" class="oj-hybrid-applayout-header">
+            <oj-module config="[[headerConfig]]"></oj-module>
+        </header>
+    </div>
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <div id="stockcontainer" style="" class="demo-padding demo-container">
+                    <div class="oj-offcanvas-outer-wrapper" style="height: 600px">
+                        <div id="mainContent" class="demo-main-content">
+                            <div class="oj-flex tabHeader">
+                                <div class="oj-flex-item" align="left">
+                                    <div class="oj-flex">
+                                        <div class="oj-flex-item">
+                                            <oj-input-date  style="max-width:10em" label-hint="Start Date" value='{{startDate}}'  > </oj-input-date>
+                                        </div>
+                                        <div class="oj-flex-item" align="left">
+                                            <oj-input-date  style="max-width:10em" label-hint="End Date" value='{{endDate}}' > </oj-input-date>
+                                        </div>
+
+                                        <div class="oj-flex-item">
+                                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                <div class="oj-flex-item">
+                                                    <oj-input-search id="searchfilter"
+                                                                     style="width:300px;"
+                                                                     value="{{stockFilter}}"
+                                                                     on-raw-value-changed="[[handleStockChanged]]"
+                                                                     placeholder="Search..."
+                                                                     aria-label="My search field">
+                                                    </oj-input-search>
+                                                </div>
+                                                <div class="oj-flex-item admbutton" align="left">
+                                                    <oj-button   chroming="full" style="width: 12em" >
+                                                        Search
+                                                    </oj-button>
+                                                </div>   
+
+                                            </div>
+                                        </div>
+                                         <div class="oj-flex-item" align="left">
+                                    <a href="#" class="tooltip" data-bind="click: function(data){toggleStockhistoryDrawer('end');}">
+                                        <img style="width:50px; height:40px;" src="css/images/add.svg"/><br/>
+
+                                    </a>
+                                </div> 
+
+                                    </div> 
+
+                                </div>
+
+
+                            </div>
+                            <div class="oj-flex">
+                                <div class="oj-flex-item">
+                                    <oj-table id='stocklisttable' aria-label='Stock history list Table'
+                                              data='[[datasource]]'
+                                              columns='[[columnArray]]'
+                                              scroll-policy='loadMoreOnScroll'
+                                              scroll-policy-options='{"fetchSize": 7}'
+                                              style="height: 450px;width: 90%"
+                                              class="table1 classstrong"
+                                              row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("stockhistorylist_template", true)]]'>                    
+                                    </oj-table>
+                                    <!-- mobile view -->
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="oj-flex">
+                                <div class="oj-flex-item">
+                                    <oj-paging-control id="stockpaging" data='[[datasource]]' page-size='10'   slot='bottom'></oj-paging-control>
+
+                                </div>
+                                <div class="oj-flex-item">
+                                    <span  data-bind="text:'Total Qty : '+totalQty()"></span>
+                                </div>
+                                <div class="oj-flex-item">
+                                    <span  data-bind="text:'Total Amt : '+totalAmount()"></span> 
+                                </div>
+                            </div>
+                        </div>
+                        <div id="endDrawer" class="oj-offcanvas-end oj-panel oj-panel-alt4 oj-offcanvas-overlay-shadow enddrawer-class"
+                             style="background-color: white;width: 50%;" >
+                             
+                            <div class="oj-flex tabHeader">
+                                <div class="oj-flex-item" align="left">
+                                    <a href="#" data-bind="click: function(data){toggleStockhistoryDrawer('end');}">
+                                        <img class="icon" src="css/images/prev.svg"/>  
+                                    </a>
+                                </div>
+                                <div class="oj-flex-item" align="left">
+                                    <span  data-bind="text:'Add Stock'"></span> 
+                                </div>
+                            </div>
+                            
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <oj-form-layout label-edge="{{labelEdge}}" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                    <oj-select-one id="selectfuel"  on-value-changed="[[setFuel]]"  label-hint="Fuel Type" style="max-width:18em" 
+                                                   options="[[fuelOptions]]" class="demo-max-width">
+                                    </oj-select-one>
+                                    <oj-input-number id="amount" style="min-width:14em"  value="{{stock().stockQuantity}}" on-keypress=[[eatNonNumbers]]
+                                                     label-hint="Enter  Quantity">
+                                    </oj-input-number>
+                                    <oj-input-number id="amount" style="min-width:14em"  value="{{stock().costPrice}}" on-keypress=[[eatNonNumbers]]
+                                                     label-hint="Enter  Unit Price">
+                                    </oj-input-number>
+                                    <oj-button   chroming="full" style="width: 18em;background-color: #2433fa" data-bind="click:updateStockQuantity">
+                                        Update Stock
+                                    </oj-button> 
+                                </oj-form-layout>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!--</div>-->
+                </div>
+
+
+
+                <script type="text/html" id="stockhistorylist_template">
+                    <tr>
+                        <td >
+                            <span data-bind="text: updatedOn"></span>
+                        </td>
+                        
+                        <td >
+                            <span data-bind="text: station.name"></span><br/>
+                            <span class="oj-text-xs oj-text-secondary-color" data-bind="text:updatedby.name"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: fuel.name"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text:'Qty : '+ stockQuantity"></span><br/>
+                            <span class="oj-text-xs oj-text-secondary-color" data-bind="text:'@ : '+ costPrice"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: amount"></span>
+                        </td>
+                    </tr>
+                    </script>
+
+                    <oj-dialog  id="progressDialogue" dialog-title="Wait ..." style="background-color: transparent">
+                        <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                            <oj-progress id="deleteBatchProgressCircle" type="circle" value="-1"></oj-progress>
+                        </div>
+                    </oj-dialog>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+

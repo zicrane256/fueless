@@ -1,0 +1,304 @@
+<!--
+ Copyright (c) 2014, 2020, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+-->
+<div class="oj-hybrid-applayout-page">
+    <div class="oj-applayout-fixed-top">
+         <oj-switcher value="[[selectedItemHeader]]">
+              <div slot="main" 
+                   id="main-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="main-tab">
+                <div class="demo-tab-content">
+            <div class="oj-flex" style="background: #307238;height:55px; width:100%;">
+                <div class="oj-flex-item">
+                    <oj-module config="[[headerConfig]]"></oj-module>
+                </div>
+                <div class="oj-flex-item" align="right">
+                            <a href="#" data-bind=" click: showUpdatePassword">
+                                <img width="40"  src="css/images/account-key.png"/>  
+                            </a>
+                                                </div>
+                <div class="oj-flex-item" align="right">
+                     <a href="#"  data-bind="click: showSearchVehicle">
+                            <img class="icon" src="css/images/searchicon.png"/><br/>
+                        </a>
+                </div>
+                <div class="oj-flex-item" style="min-width:90%;">
+                    <oj-tab-bar id="hnavlist" 
+                                                        edge="[[currentEdge]]"
+                                                        selection="{{selectedItem}}">
+                                                <ul>
+                                                    <li id="sale" >
+                                                        <a href="#" aria-controls="sale-tab-panel" id="sale-tab" >
+                                                            <span style="color:#2a8c49;font-size: 30px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'POS '"></span>
+                                                        </a>
+                                                    </li>
+                                                    <li id="salelist">
+                                                        <a href="#"  aria-controls="salelist-tab-panel" id="salelist-tab">
+                                                            <span style="color:#2a8c49;font-size: 30px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'SALES'"></span>
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </oj-tab-bar> 
+                </div>
+                
+            </div>
+                </div>
+              </div>
+              <div slot="search" 
+                   id="search-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="search-tab">
+                <div class="demo-tab-content">
+                    <div class="oj-flex" style="background: white; width:100%;">
+                          <div class="oj-flex-item">
+                              <a href="#"  data-bind="click: closeSearch">
+                            <img class="icon" src="css/images/arrow-left-black.png"/><br/>
+                        </a>
+                          </div>
+                          <div class="oj-flex-item" >
+                              <oj-input-search id="searchfilter"
+                                                         style="width:80%;"
+                                                         value="{{vehicleFilter}}"
+                                                         on-raw-value-changed="[[handleVehicleChanged]]"
+                                                         placeholder="Search..."
+                                                         aria-label="My search field">
+                                        </oj-input-search>
+                          </div>
+                          <div class="oj-flex-item" >
+                              <a href="#"  data-bind="click: closeSearch">
+                                    <img style="width:30px;" src="css/images/close.svg"/><br/>
+                                </a>
+                          </div>
+                      </div>
+                </div>
+              </div>
+             
+            </oj-switcher>
+<!--        <header role="banner" class="oj-hybrid-applayout-header">
+            <oj-module config="[[headerConfig]]"></oj-module>
+        </header>-->
+    </div>
+    <!-- This is where your main page content will be loaded -->
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <div id="vehiclecontainer" style="" class="demo-padding demo-container">
+                    <!--<div id="componentDemoContent" style="width: 1px; min-width: 100%;">-->
+                    <div class="oj-offcanvas-outer-wrapper" style="height: 600px">
+                        <!-- start offcanvas -->
+                        <!-- main content -->
+                        <div id="mainContent" class="demo-main-content">
+                            <div class="switcher-container" style="min-width: 100%">
+                                <oj-switcher value="[[selectedItem]]" >
+                                    <div slot="sale"
+                                         id="sale-tab-panel"
+                                         role="tabpanel" 
+                                         aria-labelledby="sale-tab">
+                                        <div class="demo-tab-content">
+                                             <br/>
+                                             <br/>
+                                             <br/>
+                                          
+                                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                <oj-form-layout label-edge="{{labelEdge}}" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                    <oj-input-text id="barcode" name="barcode"  class="classstrong" disabled="true"  value="{{sale().barcode}}" style="min-width:16em"  label-hint="Code"></oj-input-text>
+                                                    <oj-input-number id="amount" style="min-width:16em" required  value="{{sale().amount}}" on-keypress=[[eatNonNumbers]]
+                                                                     label-hint="Enter  Amount">
+                                                    </oj-input-number>
+                                                </oj-form-layout>
+                                            </div> 
+
+                                            <div class="oj-flex">
+                                                <div class="oj-flex-item" data-bind="visible:previewButtonVisibility">
+                                                    <a href="#" data-bind=" click:multipleConsumption" >
+                                                        <img  width="60px"  src="css/images/fulltank.png"/>  
+                                                    </a>
+                                                </div>
+                                                <div class="oj-flex-item" aleign="right" data-bind="visible:previewButtonVisibility">
+                                                    <a href="#" data-bind=" click:salePreview" >
+                                                        <img  width="60"  src="css/images/continue.png"/>  
+                                                    </a>
+                                                </div>
+                                                <div class="oj-flex-item" data-bind="visible:previewButtonVisibility">
+                                                    <a href="#" data-bind=" click:clearScreen" >
+                                                        <img  width="60"  src="css/images/cancel.png"/>  
+                                                    </a>  
+
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="oj-flex ">
+                                                <div class="oj-flex-item" data-bind="visible:searchButtonVisibility" align="center">
+                                                    <a href="#" data-bind=" click: setScanner" >
+                                                        <img class="icon" width="60"  src="css/images/scan.png"/>  
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div slot="salelist"
+                                         id="salelist-tab-panel"
+                                         role="tabpanel" 
+                                         aria-labelledby="salelist-tab">
+                                        <div class="demo-tab-content">
+                                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                <oj-table id='salelisttable' aria-label='Sale list Table'
+                                                          data='[[datasource]]'
+                                                          style="width: 100%;max-height: 350px "
+                                                          class="classstrong"
+                                                          row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("salelist_template", true)]]'>                    
+                                                </oj-table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div slot="vehiclelist"
+                                         id="vehiclelist-tab-panel"
+                                         role="tabpanel" 
+                                         aria-labelledby="vehiclelist-tab">
+                                        <div class="demo-tab-content">
+                                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                                <oj-table id='vehiclelisttable' aria-label='Vehicle list Table'
+                                                          data='[[vehicleDatasource]]'
+                                                          style="width: 100%;max-height: 350px "
+                                                          class="classstrong"
+                                                          row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("vehicle_template", true)]]'>                    
+                                                </oj-table>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+
+                                </oj-switcher>
+                            </div>
+
+                        </div>
+                        <div id="bottomDrawer"
+                             class="oj-offcanvas-bottom oj-panel oj-panel-alt4 oj-offcanvas-overlay-shadow bottomdrawer-class" style="background-color: white;width: 100%;" >
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <h4><span data-bind="text:vehicle().fuel.name"></span></h4>
+                            </div>
+                            <br/>   
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <h4><span  data-bind="text:vehicle().registrationNumber"></span></h4>
+                            </div>
+
+                            <br/>
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <h3><span  data-bind="text:computedPrice()+' /=  : '+computedQuantity()+' Ltrs'"></span></h3>
+                            </div>  
+                            <br/>
+                            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                                <div class="oj-flex-item">
+                                    <oj-button   chroming="full" style="width: 10em" data-bind="click:makeSale">
+                                        CONFIRM
+                                    </oj-button>
+                                </div>
+                                <div class="oj-flex-item">
+                                    <oj-button   chroming="full" style="width: 10em" data-bind="click:cancelSale">
+                                        CANCEL
+                                    </oj-button>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div class="oj-applayout-fixed-bottom" style="height:80px;background-color: transparent">
+         
+         <oj-switcher value="[[selectedItemFooter]]">
+              <div slot="main" 
+                   id="main-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="main-tab">
+                <div class="demo-tab-content">
+
+                    
+                </div>
+              </div>
+              <div slot="search" 
+                   id="search-tab-panel"
+                   role="tabpanel" 
+                   aria-labelledby="search-tab">
+                <div class="demo-tab-content">
+                 
+                </div>
+              </div>
+            </oj-switcher>
+         
+         
+    </div>
+
+    <oj-dialog  id="progressDialogue" dialog-title="Please wait ...">
+        <div slot="body">
+            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                <oj-progress-circle size='sm' value='-1'></oj-progress-circle>
+
+            </div>
+        </div>
+</div>
+</oj-dialog>
+
+<oj-dialog id="logoutdialogreg" dialog-title="Password">
+    <div slot="body">
+        <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+            <oj-form-layout label-edge="{{labelEdge}}" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                <oj-input-password id="passwordreg"  required label-hint="Password" placeholder="Password..." style="min-width:16em"  label-hint="Password"
+                                   value="{{password}}" ></oj-input-password>
+                <oj-input-password id="confirmpasswordreg"  required label-hint="Confirm Password" placeholder="Confirm Password..." style="min-width:16em"
+                                   value="{{confirmPassword}}"  ></oj-input-password>
+                <oj-button   chroming="full" style="min-width:16em" data-bind="click:updatePassword">
+                    Save
+                </oj-button>
+            </oj-form-layout>
+            <a href="#">
+                <img width="60" data-bind=" click: logout" src="css/images/logout.png"/>  
+            </a>
+        </div>
+    </div>
+</oj-dialog>
+
+
+
+
+<script type="text/html" id="salelist_template">
+    <tr>
+        <td data-bind=" click: function(data, event){$parent.getSelectedSale($context.row, event)}">
+
+            <span data-bind="text: vehicle.registrationNumber"></span><br/>
+            <span class="oj-text-xs oj-text-secondary-color" data-bind="text: fuel.name"></span>
+            <span class="oj-text-xs oj-text-secondary-color" data-bind="text: amount"></span>
+            <span class="oj-text-xs oj-text-secondary-color" data-bind="text: createdon"></span> 
+        </td>
+        <td>
+    <oj-bind-if test="[[status===1]]">
+        <a href="#">
+            <img class="icon" src="css/images/finished.png"/>  
+        </a>
+    </oj-bind-if>
+    <oj-bind-if test="[[status===0]]">
+        <a href="#">
+            <img class="icon" src="css/images/continue.png"/>  
+        </a>
+    </oj-bind-if>
+
+</td>
+</tr>
+</script>
+
+<script type="text/html" id="vehicle_template">
+    <tr>
+
+        <td data-bind=" click: function(data, event){$parent.getSelectedVehicle($context.row, event)}">
+            <span data-bind="text: registrationNumber"></span><br/>
+        </td>
+
+    </tr>
+</script>

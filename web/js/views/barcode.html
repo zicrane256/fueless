@@ -1,0 +1,110 @@
+<!--
+ Copyright (c) 2014, 2020, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+-->
+<div class="oj-hybrid-applayout-page">
+    <div class="oj-applayout-fixed-top">
+        <!--
+         ** Oracle JET V9.1.0 hybrid mobile application header pattern.
+         ** Please see the Oracle JET Cookbook App Shell: Hybrid Mobile demos for
+         ** more information on how to use this pattern.
+        -->
+        <header role="banner" class="oj-hybrid-applayout-header">
+            <oj-module config="[[headerConfig]]"></oj-module>
+        </header>
+    </div>
+    <!-- This is where your main page content will be loaded -->
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <div id="vehiclecontainer" style="" class="demo-padding demo-container">
+                    <!--<div id="componentDemoContent" style="width: 1px; min-width: 100%;">-->
+                    <div class="oj-offcanvas-outer-wrapper" style="height: 600px">
+                        <!-- start offcanvas -->
+                        <!-- main content -->
+                        <div id="mainContent" class="demo-main-content">
+                            <div class="oj-flex">
+                                <div class="oj-flex-item" align="left">
+                                    <oj-input-search id="searchfilter"
+                                                     style="width:160px;"
+                                                     value="{{barcodeFilter}}"
+                                                     on-raw-value-changed="[[handleBarcodeChanged]]"
+                                                     placeholder="Search..."
+                                                     aria-label="My search field">
+                                    </oj-input-search>
+                                </div>
+                                <div class="oj-flex-item">
+                                    <oj-button   chroming="full" style="width: 8em" data-bind="click:generateBarcodes" >
+                                               Generate
+                                            </oj-button>
+                                </div>
+                                <div class="oj-flex-item">
+                                <a href="#" data-bind=" click: printBarcodes" >
+                                    <img class="icon"  src="css/images/printer.png"/>  
+                                </a>
+                            </div>
+                            </div> 
+
+                            <div class="oj-flex">
+                                <div class="oj-flex-item">
+                                    <oj-table id='barcodelisttable' aria-label='Barcode list Table'
+                                              data='[[datasource]]'
+                                              scroll-policy='loadMoreOnScroll'
+                                              scroll-policy-options='{"fetchSize": 7}'
+                                              style="height: 450px;width: 100%"
+                                              class="table1 classstrong"
+                                              row-renderer='[[oj.KnockoutTemplateUtils.getRenderer("barcodelist_template", true)]]'>                    
+                                    </oj-table>
+                                    <!-- mobile view -->
+                                </div>
+                            </div>
+                          
+
+
+                        </div>
+                        <div id="bottomDrawer"
+                             class="oj-offcanvas-bottom oj-panel oj-panel-alt4 oj-offcanvas-overlay-shadow bottomdrawer-class" style="background-color: white;width: 100%;" >
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <oj-dialog  id="progressDialogue" dialog-title="Please wait ...">
+        <div slot="body">
+            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                <oj-progress-circle size='sm' value='-1'></oj-progress-circle>
+
+            </div>
+        </div>
+    </oj-dialog>
+
+
+    <script type="text/html" id="barcodelist_template">
+                    <tr>
+                        <td >
+                            <span data-bind="text: code"></span>
+                                   <oj-bind-if test='[[status===0]]'>
+    <span class="oj-text-xs oj-text-secondary-color" data-bind="text: 'Pending'"></span><br/>
+</oj-bind-if>
+                            <oj-bind-if test='[[status===1]]'>
+    <span class="oj-text-xs oj-text-secondary-color" data-bind="text: 'Printed'"></span><br/>
+</oj-bind-if>
+                            <oj-bind-if test='[[status===2]]'>
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text: 'Issued'"></span><br/>
+                                          <oj-bind-if test='[[usedby]]'>
+                            <span class="oj-text-xs oj-text-secondary-color" data-bind="text: usedby.name"></span>
+</oj-bind-if>
+                                <span class="oj-text-xs oj-text-secondary-color" data-bind="text: createdon"></span>
+</oj-bind-if>
+                        </td>
+                       
+                    </tr>
+    </script>
+
+</div>

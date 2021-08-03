@@ -1,0 +1,90 @@
+
+
+
+
+<html>
+    <body>
+
+    <oj-switcher value="[[selectedItem]]">
+        <div slot="login" 
+             id="login-tab-panel"
+             role="tabpanel" 
+             aria-labelledby="login-tab">
+            <div class="demo-tab-content">
+                <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                    <div style="padding:16px; background: #307238; width:100%; margin: auto; margin-bottom:50px;">
+                        <center><img src="css/images/logo.png" alt="Fueless" width="200px" style="margin: auto;"/></center>
+                        <h5 style="color:#ffffff; text-align: center;">PLEASE LOGIN </h5>
+                    </div>
+                </div>
+                <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                    <oj-form-layout label-edge="{{labelEdge}}" >
+                        <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                            <div class="oj-flex-item">
+                                <oj-button    style="max-width:8em;height: 53px;background-color: #fdf8f8">
+                                    <span style="color:black;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: '+256'"></span>
+                                </oj-button>
+                            </div>
+                            <div class="oj-flex-item">
+                                <oj-input-number  id="contact" name="contact" required  value="{{sessionUser().contact}}" length.max="15" length.count-by="codeUnit"  style="min-width:16em" on-keypress=[[eatNonNumbers]]   placeholder=" Contact" autocomplete="off" required="[[userContactRequired]]" validators="[[contactValidators]]"
+                                                  valid="{{userContactValid}}"  label-hint="CONTACT"></oj-input-number>
+                            </div>
+                        </div>
+                        <oj-input-password id="password" class="form-control" label-hint="Password" placeholder="Password..." style="min-width:14em"
+                                           id="password" name="password" 
+                                           autocomplete="off"  valid="{{passwordValid}}" required="[[passwordRequired]]"  length.max="32" length.min="5" length.count-by="codeUnit"       value="{{sessionUser().password}}"  ></oj-input-password>
+                    </oj-form-layout>
+                        
+                </div> 
+                <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                    <oj-button style="min-width:20em"    chroming="full" class="login_button" data-bind="visible:loginButtonVisibility, click: setUserLogin">
+                             <span style="color:yellow;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif" data-bind="text: 'LOGIN'"></span>
+                        </oj-button>
+                </div>
+                <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                    <div class="oj-flex-item" data-bind="visible:progressVisibility">
+                        <oj-progress-circle size='md' value='-1'></oj-progress-circle>
+                    </div>
+                    <div class="oj-flex-item" data-bind="visible:feedbackVisibility">
+                        <span data-bind="text:'Invalid credentials ! ! !'" >
+                        </span>
+                    </div>
+                </div>
+
+                <div class="oj-applayout-fixed-bottom" style="background-color: transparent">
+                    <!--<div role="navigation" class="oj-hybrid-applayout-navbar-app">-->
+                    <div class="oj-flex">
+                        <div class="oj-flex-item">
+                            
+                        </div>
+                        <div class="oj-flex-item" align="right">
+                            
+                        </div>
+
+                    </div>
+                    <!--</div>-->
+                </div>
+
+            </div>
+        </div>
+        
+    </oj-switcher>
+
+
+    <oj-dialog style="background-color: transparent" id="progressDialogue" dialog-title="Please wait ..." >
+        <div slot="body">
+            <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
+                <oj-progress-circle size='sm' value='-1'></oj-progress-circle>
+
+            </div>
+        </div>
+    </div>
+</oj-dialog>
+</body>
+</html>
+
+
+
+
+
+
